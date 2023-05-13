@@ -7,7 +7,7 @@ import About from './components/about/About.jsx'
 import Mydetail from './components/myDetail/MyDetail.jsx'
 import Form from './components/Form/Form.jsx'
 import Favorites from './components/favorites/Favorites'
-
+import axios from "axios"
 
 
 
@@ -16,8 +16,7 @@ function App () {
   const navigate = useNavigate()
   const [characters, setCharacters] = useState([])  
   const [access, setAccess] = useState(false)  
-  const username= 'Correo@gmail.com'
-  const password='Paaaaa01'
+
   
   useEffect(() => {
     !access && navigate('/');
@@ -26,17 +25,17 @@ function App () {
  }, [access]);
  
 
-  function login(userData) {
-    if (userData.password === password && userData.username === username) {
-       setAccess(true);
-       navigate('/home');
-    }
-    else {
-      alert('Usuario o contraseña incorrecto')
-    }
- }
+ function login(userData) {
+  const { email, password } = userData;
+  console.log(email);
+  const URL = 'http://localhost:3001/rickandmorty/login/';
+  axios(URL + `?email=${email}&password=${password}`).then(({ data }) => {
+     const { access } = data;
+     setAccess(data);
+     access && navigate('/home');
+  });
+}
 
- 
 
   function onSearch(character) {
     fetch(`http://localhost:3001/rickandmorty/character/${character}`)

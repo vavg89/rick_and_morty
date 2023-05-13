@@ -12,17 +12,15 @@ export default function reducer(state = initialState,action){
             
             return  {
                 ...state,
-                allCharacters: [...state.allCharacters, action.payload],
-                myFavorites: [...state.allCharacters, action.payload],//a lo que tengamos en favoritos le agregamos payload(id)
+                allCharacters:[...action.payload],
+                myFavorites: [...action.payload]//a lo que tengamos en favoritos le agregamos payload(id)
             };
 
         case 'DELETE_FAVORITES'://en case de que querramos borrar favoritos
-            const filtered = state.myFavorites.filter(
-                fav => fav.id !== action.payload//creamos un nuevo arreglo menos con el que tenga el id en payload
-            )
+           
             return  {
-                ...state,//nos traemos todo lo que esta en el state
-                myFavorites: filtered// actualizamos los favoritos 
+                ...state,
+                myFavorites: [...action.payload]// actualizamos los favoritos 
             };
         case 'FILTER':
             
