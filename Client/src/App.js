@@ -10,23 +10,30 @@ import Detail  from './components/Detail/Detail';
 import Form from './components/form/Form';
 import Favorites from './components/favorites/Favorites';
 
-
 function App() {
    const { pathname } = useLocation()
    const navigate = useNavigate()
+   
    const [characters, setCharacters] = useState([])
    const [access, setAccess] = useState(false)
 
-   const EMAIL = 'c@l.com';
-   const PASSWORD = 'p12345'
 
-   function login({email, password}){
-      if(email === EMAIL && password === PASSWORD){
-         setAccess(true)
-         navigate('/home')
-      }
-      else setAccess(true)
-      navigate('/home')
+   const URL = 'http://localhost:3001/rickandmorty/'
+
+   async function login({email, password}){
+     try {
+      const { data } =  await axios(`${URL}/login?email=${email}&password=${password}`)
+
+      const { access } = data
+
+      setAccess(access)
+      access && navigate('/home')
+
+     } catch ({response}) {
+         const { data } = response
+         
+         alert(data.message)
+     }
    }
 
    useEffect(()=>{
@@ -34,17 +41,21 @@ function App() {
    },[access])
 
 
-   function onSearch(id) {
-      axios(`http://localhost:3001/rickandmorty/character/${id}`)
-      .then(({ data }) => {
-         if(!characters.find(char => char.id === data.id)){
-            if (data.name) {
-               setCharacters((oldChars) => [...oldChars, data]);
-            }
-         }else{
-            alert(`Ya existe el personaje con el id ${id}`)
-         }
-      }).catch((err) => alert(err.response.data.error) )
+   async function onSearch(id) {
+      // eslint-disable-next-line
+      if(characters.find(char => char.id == id )){
+         alert(`Ya existe el personaje con el id ${id}`)
+         return
+      }
+    try {
+      const { data } =  await axios(`http://localhost:3001/rickandmorty/character/${id}`)
+      // console.log(data);
+      setCharacters( oldChars => [ ...oldChars, data ] )
+
+    } catch (error) {
+      // console.log(error);
+      alert(error.response.data)
+    }
    }
 
    const onClose = (id) => {
