@@ -1,59 +1,47 @@
-import React from "react"
+
+import { useState } from "react";
 import { validation } from "./validation";
 import { DivForm, Labelstyles, PStyles } from "./FormStyless";
 
+export default function Form({ login }) {
+    const [userData, setUserData] = useState({
+        email:'',
+        password:''
+    })
 
-export default function Form (props) {
-    const [userData, setUserData] = React.useState({ 
-        username: '',
-        password: '',
-    });
+    const [errors, setErrors] = useState({})
 
-    const [errors, setErrors] = React.useState({ 
-        username: '',
-        password: '',
-    });
-
-
-    function handleInputChange(e){
-        setUserData({...userData,[e.target.name]:e.target.value})
-
-        setErrors(validation({...userData,[e.target.name]: e.target.value }));
+    function handleChange(event){
+        setErrors(validation({...userData, [event.target.name]:event.target.value}))
+        setUserData({...userData, [event.target.name]: event.target.value})
     }
-    
-    const handleSubmit=(e)=>{
-       e.preventDefault()   
-       props.login(userData)
 
-
-
+    function handleSubmit(event){
+        event.preventDefault()
+        login(userData)
     }
-    return (
-        <DivForm>
-      <form  onSubmit={handleSubmit}>
-        <Labelstyles htmlFor="username">Usuario:</Labelstyles>
-            <input
-            id='username'
-            name='username'
-            placeholder="Ingrese su usuario..."
-            type='text'
-            value={userData.username}
-            onChange={handleInputChange}
-            />  
-            <PStyles>{errors.username}</PStyles> 
-        <br/>
-        <Labelstyles htmlFor="password">Contraseña:</Labelstyles>
-            <input
-              id='password'
-              name='password'
-              placeholder="Ingrese su contraseña..."
-              type='password'
-              value={userData.password}
-              onChange={handleInputChange}
-            />
-            <PStyles>{errors.password}</PStyles>
-            <input type='submit'/>
+  return <DivForm>
+            <form onSubmit={handleSubmit}>
+                <Labelstyles htmlFor="email">
+                    Email:
+                    <input 
+                        type="text" 
+                        id="email"
+                        value={userData.email}
+                        name="email"
+                        onChange={handleChange}/>
+                </Labelstyles>
+                <PStyles>{errors.email}</PStyles> 
+                <Labelstyles htmlFor="password">
+                    Password:
+                    <input 
+                        type="password" id="password"
+                        value={userData.password}
+                        name="password" 
+                        onChange={handleChange}/>
+                </Labelstyles>
+                <PStyles>{errors.password}</PStyles>
+                <button>Submit</button>
             </form>
-    </DivForm>
-    );
+        </DivForm>;
 }

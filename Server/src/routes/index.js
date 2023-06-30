@@ -1,13 +1,14 @@
-//router nos ayuda a conectar el server con el cliente
-const {Router}= require("express");
-const { getCharById } = require("../controllers/getCharById");
-const { postFav, deleteFav } = require("../controllers/handleFavorites");
-const { login } = require("../controllers/login");
-const router = Router();
+const { Router } = require('express')
 
-router.get("/character/:id", getCharById);
-router.get("/login", login);
-router.post("/fav",postFav);
-router.delete("/fav/:id",deleteFav)
+const getCharById = require('../controllers/getCharById')
+const { postFav, deleteFav } = require('../controllers/handleFavorites')
+const login = require('../controllers/login')
 
-module.exports={router}
+const router = Router()
+
+router.get('/character/:id', getCharById)
+router.get('/login', login)
+router.post('/fav', postFav)
+router.delete('/fav/:id',deleteFav)
+
+module.exports = router;

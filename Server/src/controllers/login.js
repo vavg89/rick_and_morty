@@ -1,14 +1,16 @@
-const data = require("../utils/users.js");
+const users = require('../utils/users')
+
+const getLogin = (req, res) => {
+    const { email, password } = req.query;
+
+    let access = false;
+
+    const autorizado = users.find(user => user.email === email && user.password === password) 
+
+    autorizado ? access = true : access = false
+
+    return res.status(200).json({access})
+}
 
 
-const login = (req , res )=>{
-const {email,password}= req.query;
-console.log(email,password);
-const emailVerification = data.find(dat => dat.email === email);
-const passworsdVerification = data.find(dat=>dat.password === password)
-if(!emailVerification||!passworsdVerification)return res.status(200).json({"access":"false"})
-res.status(200).json({"access":"true"})
-} 
-
-
-module.exports = {login}
+module.exports = getLogin;

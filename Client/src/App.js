@@ -1,56 +1,55 @@
-import {Routes, Route, useLocation, useNavigate} from 'react-router-dom'
-import Cards from './components/cards/Cards.jsx'
+/* eslint-disable react-hooks/exhaustive-deps */
 import { ImgStyle } from './components/title/titleStyle'
-import Nav from './components/Nav/Nav'
-import { useState, useEffect } from 'react'
+import {Routes, Route, useLocation, useNavigate} from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+import Cards from './components/cards/Cards.jsx';
+import Nav from './components/nav/Nav';
 import About from './components/about/About.jsx'
-import Mydetail from './components/myDetail/MyDetail.jsx'
-import Form from './components/Form/Form.jsx'
-import Favorites from './components/favorites/Favorites'
-import axios from "axios"
+import Detail  from './components/Detail/Detail';
+import Form from './components/form/Form';
+import Favorites from './components/favorites/Favorites';
 
 
+function App() {
+   const { pathname } = useLocation()
+   const navigate = useNavigate()
+   const [characters, setCharacters] = useState([])
+   const [access, setAccess] = useState(false)
 
-function App () {
-  const location = useLocation()
-  const navigate = useNavigate()
-  const [characters, setCharacters] = useState([])  
-  const [access, setAccess] = useState(false)  
+   const EMAIL = 'c@l.com';
+   const PASSWORD = 'p12345'
 
-  
-  useEffect(() => {
-    !access && navigate('/');
-    
- // eslint-disable-next-line react-hooks/exhaustive-deps
- }, [access]);
- 
+   function login({email, password}){
+      if(email === EMAIL && password === PASSWORD){
+         setAccess(true)
+         navigate('/home')
+      }
+      else setAccess(true)
+      navigate('/home')
+   }
 
- function login(userData) {
-  const { email, password } = userData;
-  console.log(email);
-  const URL = 'http://localhost:3001/rickandmorty/login/';
-  axios(URL + `?email=${email}&password=${password}`).then(({ data }) => {
-     const { access } = data;
-     setAccess(data);
-     access && navigate('/home');
-  });
-}
+   useEffect(()=>{
+      !access && navigate('/')
+   },[access])
 
 
-  function onSearch(character) {
-    fetch(`http://localhost:3001/rickandmorty/character/${character}`)
-       .then((response) => response.json())
-       .then((data) => {
-          if (data.name) {
-             setCharacters((oldChars) => [...oldChars, data]);
-          } else {
-             window.alert('No hay personajes con ese ID');
-          }
-       });
-      };
-const onClose = (id)=>{
-setCharacters(characters.filter(char => char.id !== id))
-}
+   function onSearch(id) {
+      axios(`http://localhost:3001/rickandmorty/character/${id}`)
+      .then(({ data }) => {
+         if(!characters.find(char => char.id === data.id)){
+            if (data.name) {
+               setCharacters((oldChars) => [...oldChars, data]);
+            }
+         }else{
+            alert(`Ya existe el personaje con el id ${id}`)
+         }
+      }).catch((err) => alert(err.response.data.error) )
+   }
+
+   const onClose = (id) => {
+      setCharacters(characters.filter(char => char.id !== Number(id)))
+   } 
   return (
     <div className='App' style={{ padding: '25px' }}>
 
@@ -62,7 +61,7 @@ setCharacters(characters.filter(char => char.id !== id))
      
 
       <stylesOns>
-        {location.pathname !== '/' && <Nav onSearch={onSearch}/>}
+        {pathname !== '/' && <Nav onSearch={onSearch}/>}
       </stylesOns>
 
      <Routes>
@@ -70,7 +69,7 @@ setCharacters(characters.filter(char => char.id !== id))
       <Route path='/home' element={<Cards characters={characters} onClose={onClose}/>} />
       <Route path='/about' element={<About/>} />
       <Route path='/favorites' element={<Favorites/>} />
-      <Route path='/myDetail/:myDetailId' element={<Mydetail/>} />
+      <Route path='/Detail/:myDetailId' element={<Detail/>} />
         
      </Routes>    
     </div>

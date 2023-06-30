@@ -5,15 +5,16 @@ import { useState } from "react";
 
 export default function SearchBar(props) {
    const {onSearch}=props
-   const [character, setCharacters]=useState('')
-   const handleChange = (evento)=> {
-      setCharacters(evento.target.value)
+   const [id, setId]=useState('')
+   function handleChange(event){
+      // console.log(event.target.value);
+      setId(event.target.value)
    }
    return (
       <SearchStyles>
-         <input type='search' value={character} onChange={handleChange}/>
+         <input type='search' value={id} onChange={handleChange}/>
         
-      <BottonSearch onClick={()=> onSearch(character)}>Agregar</BottonSearch>
+      <BottonSearch onClick={()=> onSearch(id)}>Agregar</BottonSearch>
       </SearchStyles>
    );
 }

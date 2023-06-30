@@ -3,8 +3,8 @@ import { DivCards} from './cardsSryles.jsx';
 
 
 
-export default function Cards(props) {
-   const {characters, onClose} = props;
+export default function Cards({characters, onClose}) {
+
    return (
             <DivCards>
             {
@@ -16,7 +16,7 @@ export default function Cards(props) {
                species={char.species}
                gender={char.gender}
                image={char.image}
-               onClose={()=> onClose(char.id)}
+               onClose={onClose}
             />
             ))}
             
