@@ -58,7 +58,7 @@ function Card({
 
          
 
-         <Botton onClick={onClose}>Closed</Botton>
+         <Botton onClick={() => onClose(id)}>onClose</Botton>
       </DivCard>
    );
 }

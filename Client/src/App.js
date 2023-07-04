@@ -14,7 +14,7 @@ function App() {
    const { pathname } = useLocation()
    const navigate = useNavigate()
    
-   const [characters, setCharacters] = useState([])
+   let [characters, setCharacters] = useState([])
    const [access, setAccess] = useState(false)
 
 
@@ -59,7 +59,9 @@ function App() {
    }
 
    const onClose = (id) => {
-      setCharacters(characters.filter(char => char.id !== Number(id)))
+      
+    const filtered = characters.filter((chars) => chars.id !== id);
+    setCharacters(filtered)
    } 
   return (
     <div className='App' style={{ padding: '25px' }}>
