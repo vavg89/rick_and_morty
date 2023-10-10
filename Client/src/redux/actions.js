@@ -1,5 +1,6 @@
 import axios from "axios";
 
+
 /*export const addFav = (character) => {
    return {
        type: "ADD_FAV",
@@ -29,7 +30,7 @@ import axios from "axios";
        });
     };
  };*/
- const URL = "http://localhost:3001/rickandmorty/";
+ const URL = "http://localhost:3001/rickandmorty";
  
  export const addFav = (character) => {
    return async (dispatch) => {
@@ -76,3 +77,25 @@ import axios from "axios";
            payload: order
        }
    }
+
+   export const createUser = (userData) => {
+    return async (dispatch) => {
+      try {
+        // Realiza la solicitud POST al servidor para crear un usuario
+        const response = await axios.post(`${URL}/login/`, userData); 
+        console.log(response);
+        // Dispatch una acción con los datos del usuario creado si la solicitud fue exitosa
+        return dispatch({
+          type: 'CREATE_USER_SUCCESS',
+          payload: response.data, // Puede ser el usuario creado u otra información relevante
+        });
+      } catch (error) {
+        // Dispatch una acción de error si la solicitud falla
+        dispatch({
+          type: 'CREATE_USER_FAILURE',
+          payload: error.message,
+        });
+      }
+    };
+  };
+  

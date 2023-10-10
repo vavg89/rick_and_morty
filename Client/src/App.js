@@ -4,11 +4,12 @@ import {Routes, Route, useLocation, useNavigate} from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import Cards from './components/cards/Cards.jsx';
-import Nav from './components/nav/Nav';
+import Nav from './components/Nav/Nav.jsx';
 import About from './components/about/About.jsx'
 import Detail  from './components/Detail/Detail';
-import Form from './components/form/Form';
+import Form from './components/Form/Form';
 import Favorites from './components/favorites/Favorites';
+import RegistrationForm from './components/RegistrationForm/RegistrationForm';
 
 function App() {
    const { pathname } = useLocation()
@@ -70,7 +71,7 @@ function App() {
       <div>
         <ImgStyle src='https://i.imgur.com/3Q0XVRV.gif'/>
       </div>
-
+      <RegistrationForm/>
      
 
       <stylesOns>

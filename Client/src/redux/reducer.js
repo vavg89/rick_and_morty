@@ -1,9 +1,10 @@
 const initialState = {
     myFavorites: [],
-    allCharacters: []
+    allCharacters: [],
+    users: [],
 }
 
-export default function reducer(state=initialState, {type, payload}){
+export default function reducer(state=initialState, {type, payload , action}){
     // console.log(action) -> {type: , payload: }
     switch (type) {
         case 'ADD_FAV':
@@ -34,6 +35,12 @@ export default function reducer(state=initialState, {type, payload}){
             payload === "A" ? a.id - b.id : b.id - a.id
             )
             }
+
+            case 'CREATE_USER':
+            return {
+            ...state,
+             users: [...state.users, action.payload],
+      };
     
         default:
             return state

@@ -14,7 +14,7 @@ server.use(express.json())
 
 server.use('/rickandmorty', router)
 
-conn.sync({force: false}).then(()=>{
+conn.sync({force: true}).then(()=>{
     server.listen(PORT, ()=> console.log(`Server is listening on port ${PORT}`))
 }).catch((error)=>{
     console.log(error);
