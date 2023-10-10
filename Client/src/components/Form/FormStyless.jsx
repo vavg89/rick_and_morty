@@ -19,8 +19,8 @@ flex-wrap: wrap;
 justify-content: center;    
 align-items: center;
 
-background-color: red;
-color: blue;
+background-color: transparent;
+color: white;
 
 `
 export const PStyles= styled.div
@@ -31,7 +31,8 @@ flex-wrap: wrap;
 justify-content: center;    
 align-items: center;
 
-background-color: red;
-color: blue;
+background-color: transparent;
+color: white;
 
 `
+

@@ -13,7 +13,7 @@ const getCharById = (req, res) => {
 
         return character.name ? res.status(200).json(character) : res.status(404).send('Not found')
     })
-    .catch(err => res.status(500).send(err.message))
+    .catch(err => res.status(500).send("Personaje no encontrado , recuerde ingresar solo numeros menores a 826"))
 }
 
 

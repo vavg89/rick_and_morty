@@ -37,8 +37,7 @@ import axios from "axios";
      try {
        const { data } = await axios.post(`${URL}/fav`, character);
  
-       console.log(data);
- 
+        
        return dispatch({
          type: 'ADD_FAV',
          payload: data,

@@ -37,17 +37,21 @@ function Card({
          removeFav(id);
        } else {
          setIsfav(true);
-         addFav({ id, name, status, species, gender, origin, image });
+         addFav({ id, name, origin, status, image, species, gender });
        }
      }
    return (
       <DivCard>
          
-         <Link to={`/Detail/${id}`}><h2>{name}</h2></Link>
+         <Link to={`/Detail/${id}`}>
+
+            <h2>{name}</h2>
+             <ImgCard  src={image} alt={name} />
+            </Link>
          
          <h2>{species}</h2>
          <h2>{gender}</h2>
-         <ImgCard  src={image} alt={name} />
+        
          
          { isFav ? (
             <BottonF onClick={handleFavorite}>❤️</BottonF>

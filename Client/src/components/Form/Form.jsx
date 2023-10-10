@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { validation } from "./validation";
 import { DivForm, Labelstyles, PStyles } from "./FormStyless";
+import "./Form.css"
 
 export default function Form({ login }) {
     const [userData, setUserData] = useState({
@@ -41,7 +42,10 @@ export default function Form({ login }) {
                         onChange={handleChange}/>
                 </Labelstyles>
                 <PStyles>{errors.password}</PStyles>
-                <button>Submit</button>
+                
+                   <button type="submit" className="submit-button" >Submit</button> 
+                
+                
             </form>
         </DivForm>;
 }
